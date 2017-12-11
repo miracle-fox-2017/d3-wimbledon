@@ -11,7 +11,8 @@ let svg = d3.select('#results')
   .append('svg')
   .attr('width', width)
   .attr('height', height)
-  .style('background', '#cacaca')
+
+
 // Data reloading
 let reload = () => {
   let data = []
@@ -25,27 +26,34 @@ let reload = () => {
 
 }
 
+
+
 // redraw function
 let redraw = (data) => {
 const yScale = d3.scaleLinear()
       .domain([0, d3.max(data)])
       .range([0, 300])
 
+const colorScale = d3.scaleLinear()
+      .range(['teal', 'teal'])
+
+
+      
 svg.selectAll('rect')
       .data(data)
       .enter()
       .append('rect')
-      .attr('class', 'bar')
       .attr('x', (d, i)=> {
         return i*15
       })
       .attr('y', (d)=> {
         return 300 - yScale(d)
       })
-      .attr('width', 10)
+      .attr('width', (width/data.length)-5)
       .attr('height', (d) => {
         return yScale(d)
       })
+      .attr('fill', colorScale)
 }
 
 reload()
