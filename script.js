@@ -28,19 +28,19 @@ let redraw = (data) => {
   console.log(dataValue)
   
   const yScale = d3.scaleLinear()
-                   .domain([0, d3.max(dataValue)])
-                   .range([0, height])
+    .domain([0, d3.max(dataValue)])
+    .range([0, height-40])
 
   const colorScale = d3.scaleLinear()
-                       .domain([0, d3.max(dataValue)])
-                       .range(['red', 'green'])
+    .domain([0, d3.max(dataValue)])
+    .range(['red', 'blue'])
 
   svg.selectAll('rect')
      .data(dataValue)
      .enter()
      .append('rect')
      .attr('x', (d, i) => {
-       return i * width/dataValue.length
+       return i * (width-marginLeft)/dataValue.length
       })
      .attr('y', (d) => {
         return height - yScale(d)
@@ -50,6 +50,31 @@ let redraw = (data) => {
        return yScale(d)
      })
      .attr('fill', colorScale)
+     .attr("transform", "translate(20, -20)")
+     
+  var scaleX = d3.scaleLinear()
+    .domain([0, dataValue.length])
+    .range([0, width-marginLeft]);
+
+  // Add scales to axis
+  var x_axis = d3.axisBottom()
+        .scale(scaleX);
+  x_axis.ticks(dataValue.length)
+  //Append group and insert axis
+  svg.append("g")
+    .attr("transform", "translate(20, 280)")
+    .call(x_axis)
+
+  var scaleY = d3.scaleLinear()
+    .domain([d3.min(dataValue), d3.max(dataValue)])
+    .range([height, 40]);
+
+  var y_axis = d3.axisLeft()
+    .scale(scaleY);
+  y_axis.ticks(d3.max(dataValue))
+  svg.append("g")
+    .attr("transform", "translate(20, -20)")
+    .call(y_axis);
 }
 
 reload()
