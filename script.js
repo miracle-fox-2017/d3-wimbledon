@@ -26,8 +26,12 @@ let reload = () => {
 let redraw = (data) => {
   // Your data to graph here
   var yScale = d3.scaleLinear()
-                 .domain([0, 4])
+                 .domain([0, d3.max(data)])
                  .range([0, height-30])
+
+  var colorScale = d3.scaleLinear()
+                     .domain([0, d3.max(data)])
+                     .range(['peru', 'teal'])
 
   svg.selectAll('rect')
     .data(data)
@@ -35,30 +39,31 @@ let redraw = (data) => {
     .append('rect')
     .attr('id', 'result')
     .attr('x', (d, i) => {
-      return i*14.15 + (width/46)
+      return i*14.15 + (width/data.length)
     })
     .attr('y', (d) => {
-      return (height-20 - yScale(d))
+      return (height+20 - yScale(0))
     })
     .attr('width', 10)
     .attr('height', (d) => {
       return yScale(d)
     })
+    .attr('fill', colorScale)
 
     var xscale = d3.scaleLinear()
-                   .domain([0, 46])
+                   .domain([0, data.length])
                    .range([0, width - 100]);
 
     var yscale = d3.scaleLinear()
-                   .domain([0, 4])
+                   .domain([0, d3.max(data)])
                    .range([height - 30, 0]);
 
     var x_axis = d3.axisBottom()
-                   .ticks(46)
+                   .ticks(data.length)
                    .scale(xscale);
 
     var y_axis = d3.axisLeft()
-                   .ticks(4)
+                   .ticks(d3.max(data))
                    .scale(yscale);
 
     svg.append("g")
@@ -71,6 +76,19 @@ let redraw = (data) => {
             .attr("transform", "translate(15, " + xAxisTranslate  +")")
             .call(x_axis)
 
+    d3.selectAll("#result")
+      .transition()
+      .attr('x', (d, i) => {
+        return i*14.15 + (width/data.length)
+      })
+      .attr('y', (d) => {
+        return (height-20 - yScale(d))
+      })
+      .attr('width', 10)
+      .attr('height', (d) => {
+        return yScale(d)
+      })
+      .duration(5000);
 
 }
 
