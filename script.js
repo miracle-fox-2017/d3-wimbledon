@@ -35,8 +35,8 @@ let redraw = (data) => {
   .range([0, height])
 
   let xScaleAxis = d3.scaleLinear()
-  .domain([0, d3.max(data)])
-  .range([0, width])
+  .domain([1, data.length])
+  .range([0, 690])
 
   let yAxis = d3.axisLeft(yScaleAxis)
   svg.append("g")
