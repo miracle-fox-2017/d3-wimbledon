@@ -27,20 +27,24 @@ let reload = () => {
 
 // redraw function
 let redraw = (data) => {
-  svg.selectAll('rect')
+const yScale = d3.scaleLinear()
+      .domain([0, d3.max(data)])
+      .range([0, 300])
+
+svg.selectAll('rect')
       .data(data)
       .enter()
       .append('rect')
       .attr('class', 'bar')
       .attr('x', (d, i)=> {
-        return i * 5
+        return i*15
       })
       .attr('y', (d)=> {
-        return 300-d * 10
+        return 300 - yScale(d)
       })
-      .attr('width', 20)
+      .attr('width', 10)
       .attr('height', (d) => {
-        return d * 10
+        return yScale(d)
       })
 }
 
