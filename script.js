@@ -61,6 +61,8 @@ let redraw = (data) => {
   .attr('x', (d, i) => {
     return xScale(i) + 22
   })
+  .transition()
+  .duration(3000)
   .attr('y', (d) => {
     return  280 -yScale(d)
   })
