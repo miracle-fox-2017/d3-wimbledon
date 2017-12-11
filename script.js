@@ -64,7 +64,7 @@ let redraw = (data) => {
     .attr('class', 'bar')
     .attr('width', itemWidth)
     .attr('height', (data) => {
-      return yScale(data)
+      return 0
     })
     .attr('fill', colorScale)
     .attr('x', (data, index) => {
@@ -76,6 +76,12 @@ let redraw = (data) => {
       // return 300 - data * 50
       // Height = 300, data = 1 * kelipatan
     })
+    .transition() // First fade to green.
+      .duration(2000)
+      .attr('height', (data) => {
+        return yScale(data)
+      })
+      
     
 }
 
