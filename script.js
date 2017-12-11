@@ -5,6 +5,7 @@ const width = 750,
   height = 300,
   margin = 20
 marginLeft = 40
+itemWidth = 20
 
 // Drawing area
 let svg = d3.select('#results')
@@ -15,12 +16,34 @@ let svg = d3.select('#results')
 // Data reloading
 let reload = () => {
   // Your data parsing here...
+  d3.tsv('afcw-results.tsv', (rows) => {
+    redraw(rows)
+  })
 }
+
+
 
 // redraw function
 let redraw = (data) => {
-  // Your data to graph here
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([0, 300])
 
+  svg.selectAll('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('class', 'bar')
+    .attr('width', itemWidth)
+    .attr('height', (data) => {
+      return data.GoalsScored * 10
+    })
+    .attr('x', (data, index) => {
+      return index * (itemWidth + 2)
+    })
+    .attr('y', (data, index) => {
+      return 0
+    })
 }
 
 reload()
