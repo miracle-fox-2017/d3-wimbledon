@@ -5,7 +5,7 @@ const width = 750,
   height = 300,
   margin = 20
 marginLeft = 40
-itemWidth = 20
+itemWidth = 15
 extraWidth = width + marginLeft
 
 // Drawing area
@@ -26,36 +26,34 @@ let reload = () => {
 
 // redraw function
 let redraw = (data) => {
-  const arrGoalScored = [] 
-  
-  data.forEach(item => {
-    arrGoalScored.push(+item.GoalsScored)
-  });
+  const arrGoalScored = data.map((item) => {
+    return item.GoalsScored
+  })
   
   const colorScale = d3.scaleLinear()
     .domain([0, d3.max(arrGoalScored)])
     .range(['purple', 'wheat'])
 
   const yScale = d3.scaleLinear()
-    .domain([d3.min(arrGoalScored), d3.max(arrGoalScored)])
-    .range([height/2   , 0])
+    .domain([0, d3.max(arrGoalScored)])
+    .range([0, height - 30])
+
+  const yScale2 = d3.scaleLinear()
+    .domain([0, d3.max(arrGoalScored)])
+    .range([height - 40, 0])
 
   const xScale = d3.scaleLinear()
     .domain([0, arrGoalScored.length])
     .range([0, width])
-  
-  // const xScale = d3.scaleOrdinal()
-  //   .domain([0, arrGoalScored.length])
-  //   .range([0, arrGoalScored.length]);
 
   const x_axis = d3.axisBottom().scale(xScale).ticks(arrGoalScored.length) // 0 - 46
-  const y_axis = d3.axisLeft().scale(yScale)  // 0 - 4
+  const y_axis = d3.axisLeft().scale(yScale2).ticks(d3.max(arrGoalScored))  // 0 - 4
 
   console.log(d3.max(arrGoalScored))
 
   svg
-    .append("g").attr("transform", "translate(30, 280)").call(x_axis)
-    .append("g").attr("transform", "translate(0,-170)").call(y_axis)
+    .append("g").attr("transform", "translate(30, 260)").call(x_axis)
+    .append("g").attr("transform", "translate(0,-260)").call(y_axis)
 
   svg.selectAll('rect')
     .data(arrGoalScored)
@@ -73,16 +71,44 @@ let redraw = (data) => {
     })
     .attr('y', (data, index) => {
       return height - yScale(data) - marginLeft
+      
       // return 300 - data * 50
       // Height = 300, data = 1 * kelipatan
     })
     .transition() // First fade to green.
-      .duration(2000)
-      .attr('height', (data) => {
-        return yScale(data)
-      })
+    .duration(2000)
+    .attr('height', (data) => {
+      return yScale(data)
+    })
       
     
 }
+
+// let redraw = (data) => {
+//   const arrGoalScored = data.map((item) => {
+//     return item.GoalsScored
+//   })
+
+//   const yScale = d3.scaleLinear()
+//     .domain([0, d3.max(arrGoalScored)])
+//     .range([0, height])
+
+//   svg.selectAll('rect')
+//     .data(arrGoalScored)
+//     .enter()
+//     .append('rect')
+//     .attr('class', 'bar')
+//     .attr('width', itemWidth)
+//     .attr('height', (data, index) => {
+//       console.log(data)
+//       return yScale(data)
+//     })
+//     .attr('x', (data, index) => {
+//       return index * (itemWidth + 2) + marginLeft
+//     })  
+//     .attr('y', (data, index) => {
+//       return height - yScale(data)
+//     })
+// }
 
 reload()
