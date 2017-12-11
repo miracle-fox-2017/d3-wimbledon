@@ -25,24 +25,38 @@ let reload = () => {
 
 // redraw function
 let redraw = (data) => {
+  const arrGoalScored = [] 
+  
+  data.forEach(item => {
+    arrGoalScored.push(+item.GoalsScored)
+  });
+  
+  const colorScale = d3.scaleLinear()
+    .domain([0, d3.max(arrGoalScored)])
+    .range(['purple', 'wheat'])
+
   const yScale = d3.scaleLinear()
-    .domain([0, d3.max(data)])
-    .range([0, 300])
+    .domain([0, d3.max(arrGoalScored)])
+    .range([0, height])
 
   svg.selectAll('rect')
-    .data(data)
+    .data(arrGoalScored)
     .enter()
     .append('rect')
     .attr('class', 'bar')
     .attr('width', itemWidth)
     .attr('height', (data) => {
-      return data.GoalsScored * 10
+      return yScale(data)
     })
+    .attr('fill', colorScale)
     .attr('x', (data, index) => {
       return index * (itemWidth + 2)
+      
     })
     .attr('y', (data, index) => {
-      return 0
+      return height - yScale(data)
+      // return 300 - data * 50
+      // Height = 300, data = 1 * kelipatan
     })
 }
 
