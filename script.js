@@ -35,7 +35,7 @@ let redraw = (data) => {
   .range([0, height-30])
   // Titik X
   const xScale = d3.scaleLinear()
-  .domain([0, goalScore.length]) // 0-45
+  .domain([0, goalScore.length+2]) // 0-45
   .range([0, width])
 
   const colorScale = d3.scaleLinear()
@@ -52,21 +52,21 @@ let redraw = (data) => {
   .append('rect')
   .attr('class','bar')
   .attr('x', (d,i) => {
-    return i * 15.7+25 //ditambah 25 karena dimulai dari 25
+    return i * 15.625+25 //ditambah 25 karena dimulai dari 25
   })
   .attr('y', (d) => {
     // Graphic dari bawah
     return 280 - yScale(d) //280 karena dimulai dari 280
     // return 0  // grafic dimulai dari atas
   })
-  .attr('width', 15 )
+  .attr('width', 12.5 )
   .attr('height', (d) => {
     return yScale(d)
   })
   .attr('fill', colorScale)
   // kasih rules
   let axisY = d3.axisLeft().ticks(4).scale(axisScaleY)
-  let axisX = d3.axisBottom().ticks(42).scale(xScale)
+  let axisX = d3.axisBottom().ticks(46).scale(xScale)
   svg.append('g')
   .attr('transform', 'translate(25, 0)') //dimulai dari 25
   .call(axisY)
