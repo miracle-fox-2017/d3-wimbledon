@@ -10,6 +10,9 @@ var color = d3.scaleLinear()
 
 
 function draw(words) {
+  var number = Math.floor((Math.random() * 100) + 1);
+  number % 2 === 0 ? 90 : 0
+  
   d3.select("#top-score").append("svg")
     .attr("width", 850)
     .attr("height", 350)
@@ -22,7 +25,7 @@ function draw(words) {
     .style("font-size", function (d) { return +d.size  + "px"; })
     .style("fill", function (d, i) { return color(i); })
     .attr("transform", function (d) {
-      return "translate(" + [d.x, d.y] + ")rotate(" + Math.floor(Math.random() * 30) + 1  + ")";
+      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
     })
     .text(function (d) { return d.Name; });
 }
