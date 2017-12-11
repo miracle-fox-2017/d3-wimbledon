@@ -25,17 +25,9 @@ let reload = () => {
 // redraw function
 let redraw = (data) => {
   // Your data to graph here
-  var scale = d3.scaleLinear()
-                .domain([0, 42])
-                .range([0, width])
-
   var yScale = d3.scaleLinear()
                  .domain([0, 4])
-                 .range([0, height])
-
-  var axisBottom = d3.axisBottom()
-                    .ticks(42)
-                    .scale(scale)
+                 .range([0, height-30])
 
   svg.selectAll('rect')
     .data(data)
@@ -43,21 +35,41 @@ let redraw = (data) => {
     .append('rect')
     .attr('id', 'result')
     .attr('x', (d, i) => {
-      return i*16 + (width/42)
+      return i*14.15 + (width/46)
     })
     .attr('y', (d) => {
-      return (height - yScale(d))
+      return (height-20 - yScale(d))
     })
-    .attr('width', 15)
+    .attr('width', 10)
     .attr('height', (d) => {
       return yScale(d)
     })
 
-  svg.append("g")
-     .attr('id', 'result')
-     .attr('x', 0)
-     .attr('y', 100)
-     .call(axisBottom);
+    var xscale = d3.scaleLinear()
+                   .domain([0, 46])
+                   .range([0, width - 100]);
+
+    var yscale = d3.scaleLinear()
+                   .domain([0, 4])
+                   .range([height - 30, 0]);
+
+    var x_axis = d3.axisBottom()
+                   .ticks(46)
+                   .scale(xscale);
+
+    var y_axis = d3.axisLeft()
+                   .ticks(4)
+                   .scale(yscale);
+
+    svg.append("g")
+       .attr("transform", "translate(15, 10)")
+       .call(y_axis);
+
+    var xAxisTranslate = height/2 + 130;
+
+    svg.append("g")
+            .attr("transform", "translate(15, " + xAxisTranslate  +")")
+            .call(x_axis)
 
 
 }
