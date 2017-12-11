@@ -52,14 +52,14 @@ let redraw = (data) => {
   .append('rect')
   .attr('class','bar')
   .attr('x', (d,i) => {
-    return i * 25+25 //ditambah 25 karena dimulai dari 25
+    return i * 15.7+25 //ditambah 25 karena dimulai dari 25
   })
   .attr('y', (d) => {
     // Graphic dari bawah
     return 280 - yScale(d) //280 karena dimulai dari 280
     // return 0  // grafic dimulai dari atas
   })
-  .attr('width', 20)
+  .attr('width', 15 )
   .attr('height', (d) => {
     return yScale(d)
   })
