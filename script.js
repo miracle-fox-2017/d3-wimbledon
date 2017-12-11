@@ -35,7 +35,7 @@ let redraw = (data) => {
   .range([0, height])
 
   let xScaleAxis = d3.scaleLinear()
-  .domain([1, data.length])
+  .domain([0, data.length])
   .range([0, 690])
 
   let yAxis = d3.axisLeft(yScaleAxis)
@@ -53,7 +53,7 @@ let redraw = (data) => {
   .data(data)
   .enter()
   .append('rect')
-  .attr("transform", `translate(30, -20)`)
+  .attr("transform", `translate(32, -20)`)
   .attr('class', 'bar')
   .attr('x', (d, i) => {
     return i * 15
