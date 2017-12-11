@@ -14,7 +14,7 @@ let reload = () => {
   // Your data parsing here...
   d3.tsv('./afcw-results.tsv',(rows)=>{
     redraw(rows);
-  })
+  });
 }
 
 // redraw function
