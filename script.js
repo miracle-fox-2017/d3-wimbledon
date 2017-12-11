@@ -77,6 +77,9 @@ let redraw = (data) => {
     })
     .transition() // First fade to green.
     .duration(2000)
+    /* .delay(function (d, i) {
+      return i * 100;
+    }).duration(500) */
     .attr('height', (data) => {
       return yScale(data)
     })
@@ -84,31 +87,5 @@ let redraw = (data) => {
     
 }
 
-// let redraw = (data) => {
-//   const arrGoalScored = data.map((item) => {
-//     return item.GoalsScored
-//   })
-
-//   const yScale = d3.scaleLinear()
-//     .domain([0, d3.max(arrGoalScored)])
-//     .range([0, height])
-
-//   svg.selectAll('rect')
-//     .data(arrGoalScored)
-//     .enter()
-//     .append('rect')
-//     .attr('class', 'bar')
-//     .attr('width', itemWidth)
-//     .attr('height', (data, index) => {
-//       console.log(data)
-//       return yScale(data)
-//     })
-//     .attr('x', (data, index) => {
-//       return index * (itemWidth + 2) + marginLeft
-//     })  
-//     .attr('y', (data, index) => {
-//       return height - yScale(data)
-//     })
-// }
 
 reload()
