@@ -31,9 +31,17 @@ let redraw = (data) => {
     return d.GoalsScored
   })
 
-  // const yScale = d3.scaleLinear()
-  // .domain([0, d3.max(datascore)])
-  // .range([0, height])
+  const yScale = d3.scaleLinear()
+  .domain([0, d3.max(goalScore)])
+  .range([0, height])
+
+  const xScale = d3.scaleLinear()
+  .domain([0, goalScore.length])
+  .range([0, width])
+
+  const colorScale = d3.scaleLinear()
+  .domain([0, d3.max(goalScore)])
+  .range(['peru','teal'])
 
   svg.selectAll('rect')
   .data(goalScore)
@@ -44,12 +52,14 @@ let redraw = (data) => {
     return i * 25
   })
   .attr('y', (d) => {
-    return 300 - d * 20
+    // return 300 - yScale(d)
+    return 0
   })
   .attr('width', 20)
   .attr('height', (d) => {
-    return d * 20
+    return yScale(d)
   })
+  .attr('fill', colorScale)
 }
 
 reload()
