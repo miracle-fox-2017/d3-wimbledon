@@ -25,21 +25,39 @@ let reload = () => {
 // redraw function
 let redraw = (data) => {
   // Your data to graph here
+  var scale = d3.scaleLinear()
+                .domain([0, 42])
+                .range([0, width])
+
+  var yScale = d3.scaleLinear()
+                 .domain([0, 4])
+                 .range([0, height])
+
+  var axisBottom = d3.axisBottom()
+                    .ticks(42)
+                    .scale(scale)
+
   svg.selectAll('rect')
     .data(data)
     .enter()
     .append('rect')
     .attr('id', 'result')
     .attr('x', (d, i) => {
-      return i * (margin + 5)
+      return i*16 + (width/42)
     })
     .attr('y', (d) => {
-      return height - d * 20
+      return (height - yScale(d))
     })
-    .attr('width', margin)
+    .attr('width', 15)
     .attr('height', (d) => {
-      return d * 50
+      return yScale(d)
     })
+
+  svg.append("g")
+     .attr('id', 'result')
+     .attr('x', 0)
+     .attr('y', 100)
+     .call(axisBottom);
 
 
 }
