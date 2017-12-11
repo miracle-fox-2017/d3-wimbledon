@@ -34,26 +34,24 @@ let redraw = (data) => {
 
   const yScale = d3.scaleLinear()
   .domain([0, d3.max(score)])
-  .range([0, height])
+  .range([0, 280])
 
-
-  const yscale = d3.scaleLinear()
-  .domain([d3.max(score),0])
-  .range([0, height])
-
-  const xscale = d3.scaleLinear()
+  const xScale = d3.scaleLinear()
   .domain([0, score.length])
-  .range([0, width])
+  .range([0, width])  
+
+  const axisY = d3.scaleLinear()
+  .domain([0, d3.max(score)])
+  .range([277, 0])
+
 
   const x_axis = d3.axisBottom()
-  .scale(xscale)
-  	.tickPadding(3)
+  .scale(xScale)
   	.ticks(score.length)
 
 
   const y_axis = d3.axisLeft()
-  .scale(yscale)
-    .tickPadding(3)
+  .scale(axisY)
     .ticks(d3.max(score))
 
   const colorScale = d3.scaleLinear()
@@ -64,25 +62,29 @@ let redraw = (data) => {
   .data(score)
   .enter()
   .append('rect')
-  .attr('width', 10)
+  .attr('width', 15)
   .attr('height', (d) => {
-  	return yScale(d)
+  	return 0
   }) 
   .attr('x', (d,i) => {
-  	return (i * 12)+30 
+  	return (i * 15.7)+30 
   })
   .attr('y', (d) => {
-  	return 280 - yScale(d)
+  	return height - yScale(d)-20
   })
   .attr('fill',colorScale) 
-
+  .transition()
+    .duration(2000)
+    .attr('height', (d) => {
+      return yScale(d)
+    })
   svg.append("g")
   .attr("transform", `translate(30,280)`)
   .call(x_axis)
 
 
   svg.append("g")
-  .attr("transform", `translate(30,0)`)
+  .attr("transform", `translate(30,2.8)`)
   .call(y_axis)
 }
 
