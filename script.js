@@ -21,6 +21,17 @@ let reload = () => {
 let redraw = (data) => {
   // Your data to graph here
   console.log(data);
+  svg.selectAll('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('width','10px')
+    .attr('height',function(score){
+      return score.GoalsScored * 80+'px'
+    })
+    .attr('x',function(score,i){
+      return i * 12
+    });
 }
 
 reload()
