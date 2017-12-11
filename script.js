@@ -42,11 +42,11 @@ let redraw = (data) => {
       return i*14.15 + (width/data.length)
     })
     .attr('y', (d) => {
-      return (height+20 - yScale(0))
+      return (height-20 - yScale(d))
     })
     .attr('width', 10)
     .attr('height', (d) => {
-      return yScale(d)
+      return yScale(0)
     })
     .attr('fill', colorScale)
 
@@ -88,7 +88,7 @@ let redraw = (data) => {
       .attr('height', (d) => {
         return yScale(d)
       })
-      .duration(5000);
+      .duration(3000);
 
 }
 
