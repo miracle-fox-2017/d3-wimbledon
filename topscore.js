@@ -7,10 +7,16 @@ const color = d3.scaleLinear()
             .domain([0,1,2,3,4,5,6,10,15,20,100])
             .range(["blue", "green", "red", "pink", "yellow", "cyan", "orange", "lime", "grey", "purple", "gold", "black"]);
 
+function cloudRotate() {
+  return (~~(Math.random() * 2)) * 90;
+}
+
 const draw = (words) => {
   d3.layout.cloud().size([800, 300])
           .words(words)
-          .rotate(0)
+          .rotate(function () {
+            return cloudRotate()
+          })
           .fontSize(function(d) { return d.size })
           .on("end", Word)
           .start()
