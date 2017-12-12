@@ -58,6 +58,13 @@ let redraw = (data) => {
         return yScale(d)
      })
      .attr('fill', 'teal')
+     .on('mouseover', function(d, i) {
+       d3.select(this).style('fill', '#bada55')
+     })
+     .on('mouseout', function(d, i) {
+       d3.select(this).style('fill', 'teal')
+     })
+     .transition().delay(2000)
 
   svg.append('g')
      .attr('transform', 'translate(0, 280)')
