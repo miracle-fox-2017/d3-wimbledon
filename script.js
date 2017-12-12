@@ -53,7 +53,7 @@ svg.selectAll('rect')
    .attr('height', (d) => {
      return yScale(d)
    })
-   .attr('fill', colorScale)
+   .attr('fill', 'teal')
 }
 
 reload()
