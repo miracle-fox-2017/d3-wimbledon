@@ -48,7 +48,7 @@ let redraw = (data) => {
     .call(y_axis)
 
   let xAxisGroup =svg.append('g')
-  .attr('transform',`translate(40, ${height -15})`)
+  .attr('transform',`translate(40, ${height -15}) `)
   .call(x_axis)
 
   
