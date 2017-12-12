@@ -51,7 +51,7 @@ let redraw = (data) => {
      .attr("transform", "translate(20, -20)")
 
      var t = d3.transition()
-     .duration(750)
+     .duration(1000)
      .ease(d3.easeLinear);
   
   svg.selectAll('rect')
