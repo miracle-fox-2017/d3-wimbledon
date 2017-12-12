@@ -49,7 +49,7 @@ let redraw = (data) => {
                   .range([0, width - 100])
   
   const y_scale = d3.scaleLinear()
-                    .domain([0, d3.max(data)])
+                    .domain([d3.max(data), 0])
                     .range([height/2, 0])
 
   const x_axis = d3.axisBottom().scale(x_scale)
@@ -72,7 +72,7 @@ let redraw = (data) => {
     })
     .attr('fill', colorScale)
     .append('g')
-    .attr('transform', 'translate(50, 10)')
+    .attr('transform', 'translate(50, 0)')
     .call(x_axis)
     .attr('transform', 'translate(0, 280')
     .call(y_axis)
