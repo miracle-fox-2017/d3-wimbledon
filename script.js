@@ -43,14 +43,17 @@ let redraw = (data) => {
     .attr('x',function(score,i){
       return i * 12
     })
-    .attr('y',function(score,i){
-      return height - yScale(score)
+    .attr('y',function(score){
+      return height
     })
     .attr('fill',colorScale)
     .transition()
     .duration(2000)
     .attr('height',function(score){
       return yScale(score)
+    })
+    .attr('y',function(score){
+      return height - yScale(score)
     })
   svg.append('g')
     .call(d3.axisLeft(yScaleReverse))
