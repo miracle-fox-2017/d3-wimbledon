@@ -3,18 +3,18 @@
 const cloud = d3.layout.cloud;
 let fill = d3.scaleOrdinal(d3.schemeCategory20)
 let leaderScale = d3.scaleLinear()
-  .range([5, 40])
+  .range([5, 1000])
 var color = d3.scaleLinear()
   .domain([0,1,2,3,4,5,6,10,15,20,100])
-  .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+  .range(["red", "green", "blue", "yellow", "orange", "lime", "grey", "teal", "purple", "pink", "cyan", "black"]);
 
 
 
 const draw = (words) => {
   // Draw your data here...
   d3.select("body").append("svg")
-  .attr("width", 850)
-  .attr("height", 350)
+  .attr("width", 1000)
+  .attr("height", 500)
   .attr("class", "wordcloud")
   .append("g")
   // without the transform, words words would get cutoff to the left and top, they would
@@ -42,9 +42,9 @@ const load = () => {
         goal: parseInt(element.G)
       })
     })
-    d3.layout.cloud().size([800, 300])
+    d3.layout.cloud().size([1000, 500])
     .words(data)
-    .rotate(0)
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
     .fontSize(function(d) { return d.goal; })
     .on("end", draw)
     .start();
