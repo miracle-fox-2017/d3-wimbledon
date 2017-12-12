@@ -35,13 +35,13 @@ let redraw = (data) => {
     .data(scores)
     .enter()
     .append('rect')
-    .attr('width','10px')
+    .attr('width','15px')
     .attr('height',function(score){
       return 0
       // return yScale(score)
     })
     .attr('x',function(score,i){
-      return i * 12
+      return i * 16.3
     })
     .attr('y',function(score){
       return height
@@ -58,7 +58,7 @@ let redraw = (data) => {
   svg.append('g')
     .call(d3.axisLeft(yScaleReverse))
     .append('g')
-    .call(d3.axisBottom(xScale))
+    .call(d3.axisBottom(xScale).ticks(scores.length))
     .attr('transform','translate(0,300)');
 }
 

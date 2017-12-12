@@ -6,7 +6,7 @@ let leaderScale = d3.scaleLinear()
 
 const color=d3.scaleLinear()
             .domain([0,1,2,3,4,5,6,10,15,20,100])
-            .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "red", "#666", "#555", "pink", "black", "blue"]);
+            .range(['#ddd','#ccc','#bbb','#aaa','#999','#888','red','#666','#555','pink','black','blue']);
 
 const draw = (words) => {
   // Draw your data here...
