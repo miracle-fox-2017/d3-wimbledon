@@ -21,26 +21,39 @@ let reload = () => {
   // Your data parsing here...
   d3.tsv("afcw-results.tsv", function (a) {
     this.score = a.map(b => {
-      return this.score = b.GoalsScored
+      return b.GoalsScored
     })
     this.oppenent = a.map(b => {
-      console.log(b)
-      return this.oppenent = b.Oppenent
+      return b.Oppenent
     })
     this.data = a
-    redraw(this.data)
+    redraw(this.score)
   })
 }
 
 // redraw function
 let redraw = (data) => {
   // Your data to graph here
+  console.log('height', height)
+  console.log('width', width)
   const yscale = d3.scaleLinear()
-                    .domain([0, d3.max(this.score)])
+                    .domain([0, d3.max(data)])
                     .range([0, 300])
-  const colscale = d3.scaleLinear()
-                      .domain([0, d3.max(this.score)])
+
+  const colorScale = d3.scaleLinear()
+                      .domain([0, d3.max(data)])
                       .range(['peru', 'teal'])
+
+  const x_scale = d3.scaleLinear()
+                  .domain([0, d3.max(data)])
+                  .range([0, width - 100])
+  
+  const y_scale = d3.scaleLinear()
+                    .domain([0, d3.max(data)])
+                    .range([height/2, 0])
+
+  const x_axis = d3.axisBottom().scale(x_scale)
+  const y_axis = d3.axisLeft().scale(y_scale)
 
   svg.selectAll('rect')
     .data(data)
@@ -50,14 +63,19 @@ let redraw = (data) => {
     .attr('x', (d, i) => {
       return i * 22
     })
-    .attr('y', ({GoalsScored}) => {
-      return 300 - yscale(GoalsScored)
+    .attr('y', (d) => {
+      return 300 - yscale(d)
     })
     .attr('width', 20)
-    .attr('height', ({ GoalsScored }) => {
-      return yscale(GoalsScored)
+    .attr('height', (d) => {
+      return yscale(d)
     })
-    .attr('fill', colscale)
+    .attr('fill', colorScale)
+    .append('g')
+    .attr('transform', 'translate(50, 10)')
+    .call(x_axis)
+    .attr('transform', 'translate(0, 280')
+    .call(y_axis)
 }
 
 reload()
