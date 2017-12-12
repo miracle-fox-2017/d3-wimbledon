@@ -11,9 +11,7 @@ let svg = d3.select('#results')
   .attr('width', width)
   .attr('height', height)
 
-// Data reloading
 let reload = () => {
-  // Your data parsing here...
   let datascore = []
   d3.tsv("afcw-results.tsv", (data) => {
     let datascore = data
@@ -46,6 +44,9 @@ let redraw = (data) => {
   .domain([0, d3.max(goalScore)])
   .range([280, 10])
 
+  let axisY = d3.axisLeft().ticks(4).scale(axisScaleY)
+  let axisX = d3.axisBottom().ticks(46).scale(xScale)
+
   svg.selectAll('rect')
   .data(goalScore)
   .enter()
@@ -64,9 +65,14 @@ let redraw = (data) => {
     return yScale(d)
   })
   .attr('fill', colorScale)
+  .on("mouseover", function (d,i) {
+    d3.select(this).style('fill', 'red')
+  })
+  .on("mouseout", function (d,i) {
+    d3.select(this).style('fill', colorScale)
+  })
   // kasih rules
-  let axisY = d3.axisLeft().ticks(4).scale(axisScaleY)
-  let axisX = d3.axisBottom().ticks(46).scale(xScale)
+
   svg.append('g')
   .attr('transform', 'translate(25, 0)') //dimulai dari 25
   .call(axisY)
